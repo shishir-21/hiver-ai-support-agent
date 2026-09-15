@@ -6,3 +6,7 @@ seaborn
 jupyter
 pytest
 python-dotenv
+langdetect
+sentence-transformers
+faiss-cpu
+groq
