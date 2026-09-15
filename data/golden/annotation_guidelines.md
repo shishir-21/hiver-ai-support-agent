@@ -3,7 +3,7 @@
 ## Purpose
 
 These guidelines define how customer messages should be assigned to one
-of the seven AmazonHelp support intents.
+of the eight AmazonHelp support intents.
 
 The goal is to make the labels consistent enough that different human
 annotators would make the same decision on the same message.
@@ -33,12 +33,14 @@ Do NOT use this intent when the main problem is:
 - a wrong or damaged product
 - a payment problem
 - an account/security problem
+- a technical problem with a device, app, or website
 
 Important boundary:
 
 If the customer says the package was marked delivered but was not
-received, label the intent as `delivery_issue`. Escalation is decided
-separately.
+received, label the intent as `delivery_issue`.
+
+Escalation is decided separately.
 
 ---
 
@@ -53,12 +55,14 @@ Examples:
 - My product arrived damaged.
 - Something is missing from my order.
 - The item I received is not what I ordered.
+- The product I received is defective.
 
 Do NOT use this intent for:
 
 - a package that has not arrived at all
 - refund/return requests where the main request is getting money back
 - payment problems
+- technical problems with an Amazon device or application
 
 Boundary:
 
@@ -115,8 +119,8 @@ Boundary:
 If the customer wants a refund for an order, use `return_or_refund`.
 
 If the customer is reporting an unexpected Prime membership charge,
-consider `payment_or_amazon_pay` unless the main issue is clearly
-Prime membership management.
+consider `payment_or_amazon_pay` unless the main issue is clearly Prime
+membership management.
 
 ---
 
@@ -189,7 +193,54 @@ Label:
 
 ---
 
-### 7. feedback_or_praise
+### 7. product_or_technical_issue
+
+Use when the main problem concerns an Amazon product, device,
+application, website, or technical functionality.
+
+Examples:
+
+- Alexa is not working correctly.
+- Fire TV remote is not working.
+- My Kindle is having a technical problem.
+- The Amazon app is not loading.
+- The Amazon website is not working.
+- A feature is not working as expected.
+- I cannot purchase anything because the website is broken.
+- My Fire TV display or remote has a problem.
+
+This intent can include technical problems involving:
+
+- Alexa
+- Echo devices
+- Fire TV
+- Kindle
+- Amazon applications
+- Amazon website
+- other Amazon device/software functionality
+
+Do NOT use this intent when the main problem is:
+
+- account access/security
+- payment or financial transaction
+- delivery of an order/package
+- return/refund
+- wrong/damaged/missing product contents
+- Prime membership management
+- general feedback without a concrete technical problem
+
+Boundary:
+
+If the customer is complaining about a physical product being
+wrong, damaged, defective, or missing from an order, use
+`order_or_product_issue`.
+
+If the customer is asking why an Amazon device, app, website, or
+feature is not working, use `product_or_technical_issue`.
+
+---
+
+### 8. feedback_or_praise
 
 Use when the message is primarily feedback, appreciation, praise, or
 a general complaint without a concrete support request.
@@ -201,6 +252,7 @@ Examples:
 - Amazon is amazing.
 - Worst customer service ever.
 - You guys are doing a great job.
+- Your service has been disappointing.
 
 Important:
 
@@ -213,6 +265,18 @@ Example:
 Label:
 
 `delivery_issue`
+
+not:
+
+`feedback_or_praise`
+
+Another example:
+
+"My Fire TV remote is broken and your support is terrible."
+
+Label:
+
+`product_or_technical_issue`
 
 not:
 
@@ -231,14 +295,24 @@ customer's MAIN problem or requested action.
 Use these rules:
 
 1. Security/access problem → `account_access_or_security`
+
 2. Payment/transaction problem → `payment_or_amazon_pay`
+
 3. Explicit return/refund request → `return_or_refund`
+
 4. Wrong/damaged/missing product after receiving an order →
    `order_or_product_issue`
-5. Delivery/tracking/missing package → `delivery_issue`
-6. Prime membership or Prime benefit as the main issue →
+
+5. Delivery/tracking/missing package →
+   `delivery_issue`
+
+6. Product, device, app, website, or technical problem →
+   `product_or_technical_issue`
+
+7. Prime membership or Prime benefit as the main issue →
    `prime_membership_or_benefit`
-7. No concrete support problem → `feedback_or_praise`
+
+8. No concrete support problem → `feedback_or_praise`
 
 These rules are intended to resolve common overlaps, not to replace
 human judgment.
@@ -259,12 +333,17 @@ For example:
 "It says delivered but I never received my package."
 
 - Intent: `delivery_issue`
-- Escalation: potentially `true`
+- Escalation: potentially `escalate`
 
 "My account was hacked."
 
 - Intent: `account_access_or_security`
-- Escalation: potentially `true`
+- Escalation: potentially `escalate`
+
+"My Fire TV remote is not working."
+
+- Intent: `product_or_technical_issue`
+- Escalation: depends on the situation
 
 The same intent can therefore have different escalation labels.
 
@@ -290,6 +369,7 @@ Examples that are likely to require escalation:
 - serious payment disputes
 - package marked delivered but not received
 - complex unresolved cases
+- repeated unresolved issues
 - cases requiring sensitive personal/account verification
 
 Examples that may be auto-handled:
@@ -299,6 +379,7 @@ Examples that may be auto-handled:
 - simple return-policy questions
 - straightforward account guidance
 - simple payment troubleshooting
+- common technical troubleshooting with a clear known procedure
 
 Escalation should be based on the actual risk and required action,
 not simply on the intent name.
@@ -326,8 +407,11 @@ Golden labels must be created or verified by humans.
 If a message is genuinely ambiguous:
 
 1. Read the complete customer message.
+
 2. Identify the customer's requested action.
+
 3. Apply the priority/boundary rules above.
+
 4. If still unclear, mark the example for review rather than guessing.
 
 The final golden set should contain a mixture of:
