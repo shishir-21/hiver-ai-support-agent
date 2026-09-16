@@ -43,41 +43,56 @@ cd hiver-ai-support-agent
 ```
 
 Create a virtual environment:
+```bash
 python -m venv .venv
+```
 
 On Windows PowerShell:
+```bash
 .venv\Scripts\Activate.ps1
+```
 
 Install dependencies:
+```bash
 pip install -r requirements.txt
+```
 
 Create a .env file and add your Groq API Key:
+```bash
 GROQ_API_KEY=your_groq_api_key_here
 GROQ_MODEL=openai/gpt-oss-20b
-
+```
 
 # How to Run Evaluations
 
 Reproducing Reply Evaluation
 
 Run the LLM-as-a-judge evaluation:
+```bash
 python -m src.evaluation.run_llm_judge
+```
 
 Analyze the results:
+```bash
 python -m src.evaluation.analyze_llm_judgments
-
+```
 
 Reproducing Escalation Evaluation
 
 Run the escalation evaluation:
+```bash
 python -m src.evaluation.evaluate_escalation
+```
 
 Run error analysis:
+```bash
 python -m src.evaluation.analyze_escalation_errors
+```
 
 Analyze escalation performance by intent:
+```bash
 python -m src.evaluation.analyze_escalation_by_intent
-
+```
 
 The evaluation scripts use the pre-generated files in data/golden/, so reviewers do not need to process the complete raw dataset to inspect the reported results.
 
