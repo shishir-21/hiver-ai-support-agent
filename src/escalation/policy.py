@@ -36,15 +36,46 @@ class EscalationPolicy:
 
         # Repeated or unresolved problems
         repeated_issue_patterns = [
-            r"\balready contacted\b",
-            r"\bcontacted you\b.*\bagain\b",
-            r"\bstill waiting\b",
-            r"\bstill no\b",
-            r"\bno update\b",
-            r"\bfor days\b",
-            r"\bfor weeks\b",
-            r"\bthird time\b",
-            r"\b3 times\b",
+        # Previous contact / repeated attempts
+        r"\balready contacted\b",
+        r"\bcontacted you\b.*\bagain\b",
+        r"\bcalled.*again\b",
+        r"\bagain and again\b",
+        r"\bkeep happening\b",
+
+        # Explicit unresolved language
+        r"\bnot resolved\b",
+        r"\bno resolution\b",
+        r"\bwithout resolution\b",
+        r"\bstill waiting\b",
+        r"\bstill no\b",
+        r"\bno update\b",
+        r"\bno response\b",
+        r"\bnever answered\b",
+        r"\bwaiting for.*response\b",
+
+        # Long unresolved periods
+        r"\bfor days\b",
+        r"\bfor weeks\b",
+        r"\bfor months\b",
+        r"\b\d+\s*days\b",
+        r"\b\d+\s*weeks\b",
+        r"\b\d+\s*months\b",
+
+        # Repeated occurrences
+        r"\bsecond time\b",
+        r"\bthird time\b",
+        r"\bfourth time\b",
+        r"\bfifth time\b",
+        r"\b2nd time\b",
+        r"\b3rd time\b",
+        r"\b4th time\b",
+        r"\b5th time\b",
+        r"\b2nd call\b",
+        r"\b3rd call\b",
+        r"\b4th call\b",
+        r"\b5th call\b",
+        r"\b\d+\s*times\b",
         ]
 
         patterns = [
