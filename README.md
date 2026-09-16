@@ -121,15 +121,18 @@ Intent Classification:
 
 The LLM classifier maps each message to one of the eight AmazonHelp-specific intents.
 
+
 Historical Retrieval:
 
 Historical support examples are embedded using all-MiniLM-L6-v2 and indexed using FAISS.
 
 The retriever returns similar historical customer/support interactions.
 
+
 Reply Generation:
 
 The retrieved historical examples are provided to the LLM as grounding context.
+
 
 The generator is instructed to:
 
