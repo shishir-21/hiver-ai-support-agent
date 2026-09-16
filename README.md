@@ -173,50 +173,43 @@ To keep this focused as a robust Week 1 implementation, we explicitly chose **no
 
 A. Intent Classification Results
 Tested on the 200-example golden set:
-
     Majority Baseline Accuracy: 31.50% (Macro-F1: 0.0599)
-
     TF-IDF + Logistic Regression Baseline Accuracy: 35.00% (Macro-F1: 0.1263)
-
     LLM Classifier Accuracy: 76.00% (Macro-F1: 0.6833)
 
 
 
 B. Reply Quality Results (LLM Judge)
 Evaluated across 96 generated replies (scored from 1 to 5):
-
     Relevance: 3.81 / 5
-
     Helpfulness: 3.76 / 5
-
     Groundedness: 4.96 / 5
-
     Safety: 5.00 / 5
-
     Clarity: 4.97 / 5
-
     Overall Judge Score: 4.50 / 5
 
 
 C. Escalation Policy Results
 Tested against the 200-sample golden set using our rule-based escalation policy:
-
     Accuracy: 64.50%
-
     Precision: 48.15%
-
     Recall: 18.57%
-
     F1 Score: 26.80%
-
     Unsafe Auto-handle Rate: 81.43%
 
 
 ## 5. What Is Misleading About Our Headline Numbers?
+The 4.50 / 5.00 overall reply-quality score should not be interpreted as evidence that the system is production-ready.
 
-    The 4.50 / 5 reply score looks great, but it was judged by an LLM, not real humans. We did not do human validation testing yet.
+First, the score comes from an LLM judge evaluating 96 replies rather than independent human ratings. Human agreement with the judge was therefore not measured.
 
-    The overall reply score does not mean our escalation system is good. In fact, our escalation recall is very low (18.57%), meaning the        bot is accidentally auto-handling many serious issues that should go to humans.
+Second, the current retrieval evaluation does not yet have strong near-duplicate or retrieval-leakage controls between the golden examples and the historical retrieval corpus.
+
+Third, the overall score hides differences between dimensions. Groundedness, safety, and clarity scored highly, while relevance and helpfulness were lower.
+
+Finally, reply quality and escalation quality measure different parts of the system. The 4.50 / 5.00 reply score does not imply that escalation decisions are equally reliable. The current escalation recall is 18.57%.
+
+Therefore, the 4.50 / 5.00 result should be treated as an evaluation signal for the current implementation, not as a production-readiness metric.
 
 
 ## 6. Top 5 Failure Modes
