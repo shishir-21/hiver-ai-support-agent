@@ -153,7 +153,23 @@ It detects explicit high-risk or unresolved signals such as:
 - delivered-but-not-received packages,
 - repeated or unresolved issues.
 
-## 3. Evaluation Results (Separated by Task)
+
+# 3. Problem Framing & Scope
+
+## What "Good" Means for This Brand (AmazonHelp)
+For an e-commerce support channel like AmazonHelp on Twitter, a "good" AI agent must:
+- **Accurately classify intent** immediately so customers are routed correctly (e.g., distinguishing between a lost package and a tech query).
+- **Maintain strict grounding** by relying purely on past human-agent responses, preventing hallucinations or unauthorized promises regarding refunds and guarantees.
+- **Safely escalate** high-risk, emotional, or unresolved security issues to human agents before automated replies can cause brand damage or customer frustration.
+
+## What We Chose Not to Build (Scope Boundaries)
+To keep this focused as a robust Week 1 implementation, we explicitly chose **not** to build:
+- **Full Autonomous Write Actions:** The agent drafts replies and assesses routing, but it does not execute live backend actions like issuing automated refunds, modifying orders, or resetting user credentials.
+- **Multi-Turn Conversation Memory:** The current architecture evaluates and responds to single customer tweets/messages independently rather than maintaining long, complex conversational state across days.
+- **Complex Real-Time Integrations:** We avoided live API integrations with third-party logistics or live database writes, relying instead on historical text retrieval via FAISS and static evaluation datasets.
+
+
+## 4. Evaluation Results (Separated by Task)
 
 A. Intent Classification Results
 Tested on the 200-example golden set:
@@ -196,14 +212,14 @@ Tested against the 200-sample golden set using our rule-based escalation policy:
     Unsafe Auto-handle Rate: 81.43%
 
 
-## 4. What Is Misleading About Our Headline Numbers?
+## 5. What Is Misleading About Our Headline Numbers?
 
     The 4.50 / 5 reply score looks great, but it was judged by an LLM, not real humans. We did not do human validation testing yet.
 
-    The overall reply score does not mean our escalation system is good. In fact, our escalation recall is very low (18.57%), meaning the bot is accidentally auto-handling many serious issues that should go to humans.
+    The overall reply score does not mean our escalation system is good. In fact, our escalation recall is very low (18.57%), meaning the        bot is accidentally auto-handling many serious issues that should go to humans.
 
 
-## 5. Top 5 Failure Modes
+## 6. Top 5 Failure Modes
 
 1. Delivery Delays & Missing Items
 
@@ -236,7 +252,7 @@ Tested against the 200-sample golden set using our rule-based escalation policy:
     Why it fails: Some normal questions trigger escalation rules too early.
 
 
-## 6. What I Would Do Next (With One More Week)
+## 7. What I Would Do Next (With One More Week)
 
 1. Expand escalation signals using the missed cases identified during failure analysis.
 2. Add retrieval-confidence signals to escalation decisions.
@@ -249,7 +265,7 @@ Tested against the 200-sample golden set using our rule-based escalation policy:
 9. Validate and calibrate intent confidence instead of treating the LLM confidence value as a probability.
 
 
-# 7. Key Architectural Decision Log 
+# 8. Key Architectural Decision Log 
 
 1. AmazonHelp brand selection: Selected AmazonHelp because the dataset contains a large number of support interactions and provides clear e-commerce support categories.
 
@@ -278,7 +294,7 @@ Tested against the 200-sample golden set using our rule-based escalation policy:
 13. CLI Error Handling: Added proper terminal checks for Windows PowerShell.
 
 
-## 8. Golden Set Documentation
+## 9. Golden Set Documentation
 
 Sampling: 200 customer queries were picked to match real-world intent counts:
 
